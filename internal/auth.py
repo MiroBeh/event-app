@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 
 from .users import get_user, User
 from database import get_db
-from dependencies import get_settings
+from config import get_settings
 
 ALGORITHM = "HS256"
 
