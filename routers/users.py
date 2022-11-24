@@ -13,11 +13,6 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 router = APIRouter(prefix="/users")
 
 
-@router.get("/test")
-def user_controller_test():
-    return {"user test": "success"}
-
-
 @router.get("/me")
 async def read_users_me(current_user: User = Depends(get_current_active_user)):
     return current_user
