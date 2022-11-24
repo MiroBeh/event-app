@@ -1,30 +1,21 @@
-from pydantic import BaseModel
-
+from fastapi import Depends
+from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 
-fake_users_db = {
-    "johndoe": {
-        "username": "johndoe",
-        "full_name": "John Doe",
-        "email": "johndoe@example.com",
-        "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
-        "disabled": False,
-    }
-}
+from models import User
+from database import get_db
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
-class User(BaseModel):
-    username: str
-    email: str | None = None
-    full_name: str | None = None
-    disabled: bool | None = None
+def get_user(db: Session, username: str):
+    return db.query(User).filter(User.username == username).first()
 
 
-class UserInDB(User):
-    hashed_password: str
-
-
-def get_user(username: str):
-    if username in fake_users_db:
-        user_dict = fake_users_db[username]
-        return UserInDB(**user_dict)
+def create_user(username: str, email: str, password: str, db: Session = Depends(get_db)):
+    hashed_password = pwd_context.hash(password)
+    user = User(email=email, username=username, hashed_password=hashed_password)
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+    return user
