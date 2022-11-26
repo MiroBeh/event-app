@@ -18,9 +18,9 @@ async def read_users_me(current_user: User = Depends(get_current_active_user)):
     return current_user
 
 
-@router.post("/create")
-async def create_user(created_user: User = Depends(create_user)):
-    return created_user
+@router.post("/create", status_code=status.HTTP_201_CREATED)
+async def create(username: str, email: str, password: str, db: Session = Depends(get_db)):
+    create_user(username, email, password, db)
 
 
 @router.post("/login", response_model=Token)
