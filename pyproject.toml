@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "event-app"
+version = "0.0.1"
+description = ""
+authors = ["Miro"]
+
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.87.0"
+sqlalchemy = "^1.4.44"
+uvicorn = {extras = ["standard"], version = "^0.20.0"}
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+python-multipart = "^0.0.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
