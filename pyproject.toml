@@ -2,7 +2,7 @@
 name = "event-app"
 version = "0.0.1"
 description = ""
-authors = ["MiroBeh <miro.behninger@gmail.com>"]
+authors = ["Miro"]
 
 
 [tool.poetry.dependencies]
